@@ -1,8 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "functions.h"
-
+#include <time.h>
 // Import data function
+float *data(float *c, char STR[20], int *length){
+FILE *ins= fopen(STR,"r");
+int i =0;
+char oneline[8];
+while (!feof(ins)) {
+    fscanf(ins,"%8s",oneline);
+    c[i]=strtof(oneline,NULL);
+    i++;
+}
+*length=i-1;
+fclose(ins);
+return c;
+}
+// Create type of inspectors to calculate store the time processing, the idle/blocked time, and the type of component that inspector 2 currently works on
+struct inspector1 {
+    float ta;
+    float idle;
+    };
+struct inspector2{
+    float ta;
+    float idle;
+    int type;
+    };
 int main()
 {
 float *c1; // address of processing time C1
@@ -58,7 +80,6 @@ if (option2==2){
     lengthw1=simlength;
     lengthw2=simlength;
     lengthw3=simlength;
-
     }
 if (option2==1) {
     float array1[5000]; // process time of inspector 1
@@ -76,18 +97,39 @@ if (option2==1) {
     w3=data(array6,"ws3.dat", &lengthw3);
     }
 }
-
 //Initial conditions
 float ptimei1=0.0; //storing process time of inspector 1 for verification purpose
 float ptimei2=0.0; //storing process time of inspector 2 for verification purpose
-float *ptime1; //storing process time of inspector 1 for verification purpose
-float *ptime2; //storing process time of inspector 2 for verification purpose
-float *w1_ta; //storing process time of working station 1
-float *w2_ta; //storing process time of working station 2
-float *w3_ta; //storing process time of working station 2
 struct inspector1 i1 = {.ta=0, .idle=0};
 struct inspector2 i2 = {.ta=0, .idle=0};
 srand(time(0));
+if (option2==1) {
+ptimei1=*c1; //loading input from file
+}
+else {
+ptimei1=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+}
+i1.ta=ptimei1;
+if (rand()%2 == 0){
+    i2.type=2;
+    if (option2==1) {
+    ptimei2=*c2; //loading input from file
+    }
+    else {
+    ptimei2=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+    }
+    i2.ta=ptimei2;
+}
+else {
+    i2.type=3;
+    if (option2==1) {
+    ptimei2=*c3; //loading input from file
+    }
+    else {
+    ptimei2=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+    }
+    i2.ta=ptimei2;
+}
 float w1ta=0.0;
 float w2ta=0.0;
 float w3ta=0.0;
@@ -122,170 +164,307 @@ float inplant3=0.0; // total time that C3 stay in the system {for verification}
 int b1=0;  // number of components C1 inspector 1 send to the buffer 1
 int b2=0;  // number of components C1 inspector 1 send to the buffer 2
 int b3=0;  // number of components C1 inspector 1 send to the buffer 3
-int *s;     //Pointer for the counter of components in each system at the current time
-int *b;     //Pointer to save the # of components that Inspector 1 send to the buffers
-
-/*--------------------------------FUNCTION--------------------------------*/
-ptime1 = timingp(c1,option2,nc1,lolimit,range);
-i1.ta= *ptime1;
-
-if (rand()%2 == 0){
-    i2.type=2;
-/*--------------------------------FUNCTION--------------------------------*/
-    ptime2 = timingp(c2,option2,nc2,lolimit,range);
-    i2.ta=*ptime2;
-
-} else {
-    i2.type=3;
-/*--------------------------------FUNCTION--------------------------------*/
-    ptime2 = timingp(c3,option2,nc3,lolimit,range);
-    i2.ta=*ptime2;
-}
 
 // Main Part of Program
 while ((i1.ta >0) || (i2.ta >0) || (w1ta >0) || (w2ta >0) || (w3ta >0)) {
-/*--------------------------------FUNCTION--------------------------------*/
-    itime =clockfcn(i1.ta,i2.ta,w1ta,w2ta,w3ta);
+    if (i1.ta >0){
+        itime=i1.ta;
+    }
+    if ((i2.ta > 0) && (itime > i2.ta)){
+        itime=i2.ta;
+    }
+    if ((w1ta  > 0) && (itime > w1ta)) {
+        itime=w1ta;
+    }
+    if ((w2ta  > 0) && (itime > w2ta)){
+        itime=w2ta;
+    }
+    if ((w3ta  > 0) && (itime > w3ta)){
+        itime=w3ta;
+    }
     clock+=itime; // simulation time
-    // Compute number of components at current time
-/*--------------------------------FUNCTION--------------------------------*/
-    s=counters(i1.ta,i2.ta,w1ta,w2ta,w3ta,b11,b21,b22,b31,b33,i2.type);
+// Compute number of components at current time
+
+    // compute number of components being processed or kept by inspectors
+    s1=0;
+    s2=0;
+    s3=0;
+    if ((i1.ta > 0) || ((b11==2) && (b21==2)&&(b31==2))){
+    s1++;
+    }
+    if (((i2.ta >0) || (b22==2))&& (i2.type == 2)) {
+     s2++;
+    }
+    if (((i2.ta >0) || (b33==2))&& (i2.type == 3)) {
+     s3++;
+    }
+    // compute number of component being processed by workstations
+    if (w1ta > 0) {
+     s1++;
+    }
+    if (w2ta > 0) {
+     s1++;
+     s2++;
+    }
+    if (w3ta > 0) {
+    s1++;
+    s3++;
+    }
     // Total of component in the plant at the current time
-    s1=s[0];
-    s2=s[1];
-    s3=s[2];
+    s1+=b11+b21+b31;
+    s2+=b22;
+    s3+=b33;
   // Compute the total process time of components at the current time
-    inplant1=inplant1+s1*itime;
-    inplant2=inplant2+s2*itime;
-    inplant3=inplant3+s3*itime;
+ inplant1=inplant1+s1*itime;
+ inplant2=inplant2+s2*itime;
+ inplant3=inplant3+s3*itime;
+
 // Clock advances to the next event
-    i1.ta -=itime;
-    i2.ta -=itime;
-    w1ta -= itime;
-    w2ta -= itime;
-    w3ta -= itime;
+ i1.ta -=itime;
+ i2.ta -=itime;
+ w1ta -= itime;
+ w2ta -= itime;
+ w3ta -= itime;
 // The time moment when components are received by inspectors:  // for verification
  if ((i1.ta == 0) && (nc1 > 0)){ // total time of the component 1 entering the black box
-    clockin1+=clock-ptimei1;
+   clockin1+=clock-ptimei1;
  }
  if ((i2.ta == 0) && (i2.type == 2) && (nc2>0)){ //total time of the component 2 entering the black box
-    clockin2+=clock-ptimei2;
+   clockin2+=clock-ptimei2;
  }
  if ((i2.ta == 0) && (i2.type == 3) && (nc3>0)) { //total time of the component 3 entering the black box
-    clockin3+=clock-ptimei2;
+   clockin3+=clock-ptimei2;
  }
     // When an event Triggers:
 
     // Event Ins1 triggers:
-if ((i1.ta <= 0) && ((b11 < 2) || (b21 < 2) || (b31 < 2)) && (nc1 <= (lengthc1-1)) ){ //if the inspector 1 finishes C1 and there is a space in buffers for C1
-/*--------------------------------FUNCTION--------------------------------*/
-    b = buffer1(b11,b21,b31,b22,b33,option1);
-    b11+=b[0];
-    b21+=b[1];
-    b31+=b[2];
-    nc1++; // number of loaded components C1
-    if (i1.ta < 0) { // compute idle time
-        i1.idle-= i1.ta;
-    }
-/*--------------------------------FUNCTION--------------------------------*/
-    ptime1 = timingp(c1,option2,nc1,lolimit,range);
-    i1.ta= *ptime1;
-}//End if case for inspector 1
-//This is not a function but it was good to reduce the code
-// Event Ins2 can trigger:
-int t; // Identifier for type of component
-if ((i2.type == 2) && (b22 < 2) && (nc2 <= (lengthc2-1))){
-    t=2;
-} else if((i2.type == 3) && (b33 < 2)&& (nc3 <= (lengthc3-1))){
-    t=3;
-} else{
-    t=0;
+
+if (option1==1){
+if ((i1.ta <= 0) && ((b11 < 2) || (b21 < 2) || (b31 < 2)) && (nc1 <= (lengthc1-1))){ //if the inspector 1 finishes C1 and there is a space in buffers for C1
+   if  (b11 < 2) {
+       b1 = 1;
+       b2 = 0;
+       b3 = 0;
+       }
+    else if (b21 < 2) {
+           b1 = 0;
+           b2 = 1;
+           b3 = 0;
+           }
+          else { // if B2, B3 has no C2, C3 ready, the priority goes to B1
+           b1 = 0;
+           b2 = 0;
+           b3 = 1;
+          }
+   b11=b11+b1;
+   b21=b21+b2;
+   b31=b31+b3;
+   b1=0;
+   b2=0;
+   b3=0;
+   if (i1.ta < 0) { // compute idle time
+       i1.idle-= i1.ta;
+   }
+   nc1++; // number of loaded components C1
+   if (nc1 <= (lengthc1-1)) {
+        if (option2==1) {
+        ptimei1=*(c1+nc1); //loading input from file
+        }
+        else {
+        ptimei1=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+        }
+        i1.ta=ptimei1;
+   }
+}
+}
+else {
+if ((i1.ta <= 0) && ((b11 < 2) || (b21 < 2) || (b31 < 2)) && (nc1 <= (lengthc1-1))){ //if the inspector 1 finishes C1 and there is a space in buffers for C1
+   if  (((b21 < 1) && (b22 > 0)) || ((b21<2) && (b11 == 2))) { // if B2 has C2 ready then priority goes to B2
+       b1 = 0;
+       b2 = 1;
+       b3 = 0;
+       }
+    else if (((b31 < 1) && (b33 > 0)) || ((b31 < 2) && (b21 == 2))) { // if B3 has C3 ready then priority goes to B3
+           b1 = 0;
+           b2 = 0;
+           b3 = 1;
+           }
+          else { // if B2, B3 has no C2, C3 ready, the priority goes to B1
+           b1 = 1; b2 = 0; b3 = 0;
+          }
+   b11=b11+b1;
+   b21=b21+b2;
+   b31=b31+b3;
+   b1=0;
+   b2=0;
+   b3=0;
+   if (i1.ta < 0) { // compute idle time
+       i1.idle-= i1.ta;
+   }
+   nc1++; // number of loaded components C1
+   if (nc1 <= (lengthc1-1)) {
+        if (option2==1) {
+        ptimei1=*(c1+nc1); //loading input from file
+        }
+        else {
+        ptimei1=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+        }
+        i1.ta=ptimei1;
+   }
+}
 }
 
- if ((i2.ta <= 0) && (t == 2 || t == 3) && (nc2 <= (lengthc2-1)) ){ // if the component the inspector 2 finishes is 2 or 3
-    if (t == 2){ //If it was C2
-        b22++;  //Increase C2
-    } else{     //If not
-        b33++;  //Increase C3
-    }
-    i2.type = (rand()%2)+2; // the type of component that inspector 2 receives to process is randomly generated.
-    if (i2.ta < 0) { // compute idle time
+    // Event Ins2 triggers:
+ if ((i2.ta <= 0) && (i2.type == 2) && (b22 < 2) && (nc2 <= (lengthc2-1))){ // if the component the inspector 2 finishes processing is C2
+    b22++;
+    if (i2.ta < 0) {
         i2.idle-=i2.ta;
     }
+    i2.type = rand()%2+2; // the type of component that inspector 2 receives to process is randomly generated.
     if (i2.type == 2) {
         nc2++;
+        if (nc2 <= (lengthc2-1)) {
         if (option2==1) {
-            ptimei2=*(c2+nc2); //loading input from file
-        } else {
-            ptimei2=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+        ptimei2=*(c2+nc2); //loading input from file
+        }
+        else {
+        ptimei2=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
         }
         i2.ta=ptimei2;
-    } else {
+        }
+    }
+    if (i2.type == 3) {
         nc3++;
+        if (nc3 <= (lengthc3-1)) {
         if (option2==1) {
-            ptimei2=*(c3+nc3); //loading input from file
-        } else {
-            ptimei2=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+        ptimei2=*(c3+nc3); //loading input from file
+        }
+        else {
+        ptimei2=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
         }
         i2.ta=ptimei2;
+        }
+    }
+ }
+
+ if ((i2.ta <= 0) && (i2.type == 3) && (b33 < 2)&& (nc3 <= (lengthc3-1))) { // if the component the inspector 2 finishes processing is C3
+    b33++;
+    if (i2.ta < 0) {
+        i2.idle= i2.idle-i2.ta;
     }
 
+    i2.type = (rand()%2)+2;
+    if (i2.type == 2) {
+        nc2++ ;
+        if (nc2 <= (lengthc2-1)) {
+        if (option2==1) {
+        ptimei2=*(c2+nc2); //loading input from file
+        }
+        else {
+        ptimei2=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+        }
+        i2.ta=ptimei2;
+        }
+    }
+    if (i2.type == 3) {
+        nc3++;
+        if (nc3 <= (lengthc3-1)) {
+        if (option2==1) {
+        ptimei2=*(c3+nc3); //loading input from file
+        }
+        else {
+        ptimei2=lolimit+((float)rand()/(float)RAND_MAX)*range; //generate random input
+        }
+        i2.ta=ptimei2;
+        }
+    }
  }
 
  // Event WS1((float)rand()/(float)RAND_MAX)*range
-if (w1ta == 0){
+ if (w1ta == 0){
     np1++;
     clockoutp1+=clock; // total time of the components C1 when they go out of the black box as completed products
-} else if (w2ta == 0) {
+    }
+ if (w2ta == 0) {
     np2++;
     clockoutp1+=clock; // total time of the components C2 when they go out of the black box as completed products
     clockoutp2+=clock; // total time of the components C3 when they go out of the black box as completed products
-} else if (w3ta == 0) {
+    }
+ if (w3ta == 0) {
     np3++;
     clockoutp1+=clock; // total time of the component 1 outing the black box
     clockoutp3+=clock; // total time of the component 3 outing the black box
-}
-
-if ((w1ta <=0) && (b11 > 0) && (nw1 <= (lengthw1-1))){
+    }
+ if ((w1ta <=0) && (b11 > 0) && (nw1 <= (lengthw1-1))){
     nw1++;
     b11--;
     if (nw1 <= (lengthw1-1)) {
-/*--------------------------------FUNCTION--------------------------------*/
-        w1_ta = timingw(w1,option2,nw1,range);
-        w1ta= *w1_ta;
+        if (option2==1){
+           w1ta=*(w1+nw1);
+        }
+        else {
+           w1ta= ((float)rand()/(float)RAND_MAX)*range;
+        }
+        }
     }
-} else if ((w2ta <=0) && (b21 >0) && (b22 >0) && (nw2 <= (lengthw2-1))){
+ if ((w2ta <=0) && (b21 >0) && (b22 >0) && (nw2 <= (lengthw2-1))){
     nw2++;
     b21--;
     b22--;
     if (nw2 <= (lengthw2-1)) {
-/*--------------------------------FUNCTION--------------------------------*/
-        w2_ta = timingw(w2,option2,nw2,range);
-        w2ta= *w2_ta;
+        if (option2==1){
+        w2ta=*(w2+nw2);
+        }
+        else {
+           w2ta= ((float)rand()/(float)RAND_MAX)*range;
+        }
     }
-} else if ((w3ta <=0) && (b31 >0) && (b33 >0) && (nw3 <= (lengthw3-1))) {
+    }
+ if ((w3ta <=0) && (b31 >0) && (b33 >0) && (nw3 <= (lengthw3-1))) {
     nw3++;
     b31--;
     b33--;
     if (nw3 <= (lengthw3-1)) {
-/*--------------------------------FUNCTION--------------------------------*/
-        w3_ta = timingw(w3,option2,nw3,range);
-        w3ta= *w3_ta;
+        if (option2==1){
+        w3ta=*(w3+nw3);
+        }
+        else {
+           w3ta= ((float)rand()/(float)RAND_MAX)*range;
+        }
     }
-}
-
-} // End of the main part of the program
+    }
+ } // End of the main part of the program
 
 // Verification for General Black Box
   // Number of components at the moment
-// s1=0;
-// s2=0;
-// s3=0;
- s=counters(i1.ta,i2.ta,w1ta,w2ta,w3ta,b11,b21,b22,b31,b33,i2.type);
+ s1=0;
+ s2=0;
+ s3=0;
+ if ((i1.ta > 0) || ((b11==2) && (b21==2)&&(b31==2))){
+    s1++;
+    }
+ if (((i2.ta >0) || (b22==2))&& (i2.type == 2)) {
+     s2++;
+    }
+ if (((i2.ta >0) || (b33==2))&& (i2.type == 3)) {
+     s3++;
+    }
+    // compute number of component being processed by workstations
+ if (w1ta > 0) {
+     s1++;
+    }
+ if (w2ta > 0) {
+     s1++;
+     s2++;
+    }
+ if (w3ta > 0) {
+    s1++;
+    s3++;
+    }
     // Total of component in the plant at the current time
- s1=s[0];
- s2=s[1];
- s3=s[2];
+ s1+=b11+b21+b31;
+ s2+=b22;
+ s3+=b33;
 // Total time of components being the black box
 float clock1=clockoutp1+s1*clock-clockin1;
 float clock2=clockoutp2+s2*clock-clockin2;
@@ -377,3 +556,5 @@ fprintf(f,"idleness of inspector 2: %f\n", idleness2);
 fclose(f);
 return 0;
 }
+
+
