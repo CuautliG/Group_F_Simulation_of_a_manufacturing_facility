@@ -1,31 +1,32 @@
 #ifndef DATA_TYPES_H_INCLUDED
 #define DATA_TYPES_H_INCLUDED
 
-MAX_SIMULATION_LENGTH=500;
+#define MAX_SIMULATION_LENGTH 500
 
 struct CONFIG{              //Temporal function to provide the initial values
-        int both_models;    //If the simulator will run once or twice
-        int model_type;     //Model type of the simulator
-        char read_generate; //Read data or generate data
-        int simlength;      //Simulation length
-        float lolimit;      //Lower limit
-        float uplimit;      //Upper limit
+    int both_models;        //If the simulator will run once or twice
+    int model_type;         //Model type of the simulator
+    char read_generate;     //Read data or generate data
+    int sim_length;          //Simulation length
+    float lolimit;          //Lower limit
+    float uplimit;          //Upper limit
 };
 
 struct INSPECTOR{           //Inspector instructor
     char *id;               //Id of inspector
     char *name;             //Name of the inspector
-    int type;               //Type of component he inspects
-    float pro_time;         //Processing time of the inspector
     float idle_time;        //Idle time of the inspector
 };
 
-struct STATE{               //
-    int model;
-    int sim_length;
-    int iteration;
-    int produced_prod;
-    struct INSPECTOR inspectors;
+struct STATE{                   //State of simulator
+    int model;                  //Simulation model
+    int sim_length;             //Simulation length
+    float clock;                //Simulation clock
+    int produced_prod[3];       //Produced products
+    int used_component[3];      //Used components
+    int unused_component[3];    //Unused components
+    struct INSPECTOR inspector1;//Inspector one
+    struct INSPECTOR inspector2;//Inspector two
 };
 
 struct PTIME{               //Processing time function
