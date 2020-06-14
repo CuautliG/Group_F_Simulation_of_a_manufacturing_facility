@@ -14,6 +14,7 @@
 #include "../include/read_config.h"
 
 int split_key_value(char* input_line, char* key_value[]){
+    // this is to create a delimiter "="
     char* token = strtok(input_line, "=");
 
     key_value[0]=token;
@@ -31,7 +32,7 @@ int split_key_value(char* input_line, char* key_value[]){
 int parse_config(char *config_file, struct CONFIG *my_config){
 
     FILE *curr_config_file;
-    curr_config_file = fopen(config_file, "r");
+    curr_config_file = fopen(config_file, "r");//opens the config file
 
     char* key_value[2];
     int rtn_val =0;
@@ -41,7 +42,8 @@ int parse_config(char *config_file, struct CONFIG *my_config){
         printf("Failed to open config file: %s.\n", config_file);
         rtn_val=-1;
     }
-
+    
+    // reads each line and gets the element of my_config
     int value_split ;
     while(fgets(curr_line, MAX_LINE_LENGTH, curr_config_file) != NULL){
         value_split = split_key_value(curr_line, key_value);
@@ -75,7 +77,7 @@ int parse_config(char *config_file, struct CONFIG *my_config){
 */
 int read_config(char* config_file, struct CONFIG *my_config){
 
-    int result = parse_config(config_file, my_config);
+    int result = parse_config(config_file, my_config);//calls the parse_config function
 
     printf("both_models, %d\n", my_config->both_models);
     printf("model_type, %d\n", my_config->model_type);
