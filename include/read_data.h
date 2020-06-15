@@ -1,6 +1,4 @@
 #ifndef READ_DATA_H_INCLUDED
 #define READ_DATA_H_INCLUDED
 
-
-
 #endif // READ_DATA_H_INCLUDED
