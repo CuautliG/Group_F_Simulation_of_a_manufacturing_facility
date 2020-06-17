@@ -10,7 +10,7 @@ Group Information
 ## Authors
 
 1. **Charles Emesobum** 
-   * GitHub:  *charlesemesobum*
+   * GitHub:  **_charlesemesobum_**
 2. **Cuautli Garcia**
    * 
 3. **Hai Ngoc Nguyen**
