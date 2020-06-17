@@ -53,13 +53,13 @@ The correct file structure (after installing GSL library should be follow and ru
   * read\_config.h
   * read\_data.h
   * work\_flow.h
-* src\
+* src
   * export.c
-  * main.c
-  * read\_config.c
-  * read\_data.c
-  * work\_flow.c
-  * sensor.c
+  * main.c
+  * read\_config.c
+  * read\_data.c
+  * work\_flow.c
+  * sensor.c
 
 Documentation
 =============
