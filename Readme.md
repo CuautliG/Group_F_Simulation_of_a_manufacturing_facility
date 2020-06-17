@@ -12,11 +12,11 @@ Group Information
 1. **Charles Emesobum** 
    * GitHub:  **_charlesemesobum_**
 2. **Cuautli Garcia**
-   * 
+   * GitHub:  **_cuautilG_**  
 3. **Hai Ngoc Nguyen**
-   * 
+   * GitHub:  **_ngochai1604_**
 4. **Imbie David Nku**
-   * 
+   * GitHub:  **_panakou_**
 
 Installation
 ============
