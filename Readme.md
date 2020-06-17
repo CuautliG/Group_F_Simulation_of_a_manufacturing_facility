@@ -29,16 +29,16 @@ File Structure
 
 The correct file structure (after installing GSL library should be follow and run the binary)
 
-├── INSTALL.md -&gt; Installation Guide
-├── LICENSE -&gt; License file
-├── Makefile -&gt; Makefile
-├── README.md -&gt; Readme file
-├── bin -&gt; Binary directory
-├── doc
+* INSTALL.md -&gt; Installation Guide
+* LICENSE -&gt; License file
+* Makefile -&gt; Makefile
+* README.md -&gt; Readme file
+* bin -&gt; Binary directory
+*doc
 │
 │
-├── data
-│   ├── input
+* data
+  *input
 │ │ ├── servinsp1.dat
 │  │   ├── servinsp22.dat
 │   │ ├── servinsp23.dat
@@ -69,8 +69,8 @@ The correct file structure (after installing GSL library should be follow and ru
 Documentation
 =============
 
-The User manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki).
-The developer manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki).
+The User manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
+The developer manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
 
 License
 =======
