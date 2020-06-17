@@ -39,16 +39,15 @@ The correct file structure (after installing GSL library should be follow and ru
 │
 * data
   * input
-│ │ ├── servinsp1.dat
-│  │   ├── servinsp22.dat
-│   │ ├── servinsp23.dat
-│   │ ├── ws1.dat
-│ │ ├── ws2.dat
-│ │ └── ws3.dat
-│ │
-│ │
-│ └── output
-│ └── results.csv
+   * servinsp1.dat
+   * servinsp22.dat
+   * servinsp23.dat
+   * ws1.dat
+   * ws2.dat
+   * ws3.dat
+
+ *output
+  * results.csv
 │
 ├── include
 │   ├── data\_types.h
