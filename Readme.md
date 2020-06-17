@@ -7,13 +7,16 @@ At the end of each simulation the program will display the main results and it w
 
 Group Information
 =======
-##Authors
+**Authors**
 
 1. Charles Emesobum 
-* GitHub:  charlesemesobum
+ * GitHub:  *charlesemesobum*
 2. Cuautli Garcia
+ * 
 3. Hai Ngoc Nguyen
+ * 
 4. Imbie David Nku
+ * 
 
 Installation
 ============
