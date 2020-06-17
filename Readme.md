@@ -34,11 +34,11 @@ File Structure
 
 The correct file structure (after installing GSL library should be follow and run the binary)
 
-* INSTALL.md -&gt; Installation Guide
-* LICENSE -&gt; License file
-* Makefile -&gt; Makefile
-* README.md -&gt; Readme file
-* bin -&gt; Binary directory
+* INSTALL.md  
+* LICENSE  
+* Makefile  
+* README.md  
+* bin  
 * doc
 * data
   * input
@@ -65,6 +65,7 @@ The correct file structure (after installing GSL library should be follow and ru
   * read\_data.c
   * work\_flow.c
   * sensor.c
+* Test
 
 Documentation
 =============
