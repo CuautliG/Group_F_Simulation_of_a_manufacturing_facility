@@ -38,7 +38,7 @@ The correct file structure (after installing GSL library should be follow and ru
 │
 │
 * data
-  *input
+  * input
 │ │ ├── servinsp1.dat
 │  │   ├── servinsp22.dat
 │   │ ├── servinsp23.dat
