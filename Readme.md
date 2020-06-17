@@ -5,13 +5,15 @@ The simulator of a manufactury facility was developed to model the assembling pr
 The user is able to choose which model he/she wants to simulate and the initial values of the process. If the user does not provide initial values the program uses the default values saved in a configuration file. By default the simulator needs inputs files that contains the processing times of each stage of the working process. However, the program can also generate random files in case the user specified it in the configuration file.
 At the end of each simulation the program will display the main results and it will also create report file(s) with those results. For more information about the initial values, input files or the report files of the simulator, please refer to user documentation.
 
-Authors
+Group Information
 =======
+##Authors
 
--   Charles Emesobum - <charlesemesobum@cmail.carleton.ca> - Carleton University
--   Cuautli Garcia
--   Hai Ngoc Nguyen
--   Imbie David Nku
+1. Charles Emesobum 
+* GitHub:  charlesemesobum
+2. Cuautli Garcia
+3. Hai Ngoc Nguyen
+4. Imbie David Nku
 
 Installation
 ============
