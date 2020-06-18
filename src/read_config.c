@@ -1,6 +1,4 @@
-//
-//  main.c
-//  Parse_config
+//  read_config
 //
 //  Created by Charles Emesobum on 2020-06-02.
 //  Copyright © 2020 Charles Emesobum. All rights reserved.
