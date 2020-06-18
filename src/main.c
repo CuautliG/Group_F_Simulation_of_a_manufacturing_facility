@@ -1,3 +1,15 @@
+/*! \mainpage Simulator of a Manufacturing Facility
+ *
+ * This is the introduction. \n
+ * \n
+ * The code is divided into the following functions: \n
+ *
+ * - \ref main function
+ * - \ref export_files function
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,48 +17,39 @@
 #include "../include/data_types.h"
 #include "../include/main.h"
 
+/*!
+ * \section main
+ */
+
 //Run Simulator
-int run_simulator(struct CONFIG my_config) {
-    printf("Model type: %d",my_config.model_type);
+int run_simulator(struct CONFIG *my_config, char* input_directory, char* output_directory) {
 
-    struct STATE *my_state=malloc(MAX_SIMULATION_LENGTH*sizeof(struct STATE));
-    struct INSPECTOR inspector1={.id="2351",.name="Cuau",.type=2};
-    struct PTIME *my_ptime=malloc(MAX_SIMULATION_LENGTH*sizeof(struct STATE));
+    int data_var;
+    int flow_var;
+    int export_var;
 
-    for (int i=0; i<my_config.simlength; i++){
-        (my_state+i)->model = my_config.model_type;
-        (my_state+i)->sim_length = my_config.simlength;
-        (my_state+i)->iteration = i;
-        (my_state+i)->produced_prod = i%2;
-        (my_state+i)->inspectors =inspector1;
-        (my_ptime+i)->comp1=i*i;
+    struct STATE *my_state=malloc(SIM_STATES*sizeof(struct STATE));
+    struct PTIME *my_ptime=malloc(sizeof(struct STATE));
+    struct INSPECTOR my_inspector1={.id="1234",.name="PersonOne",.idle_time=0.00};
+    struct INSPECTOR my_inspector2={.id="4321",.name="PersonTwo",.idle_time=0.00};
+
+    for (int i=0; i<SIM_STATES; ++i){ //Initialize inspectors in my_state
+        (my_state+i)->inspector1=my_inspector1;
+        (my_state+i)->inspector2=my_inspector2;
     }
 
-    for (int i=0; i<my_config.simlength; i++){
-        printf("iteration is: %d\n",(my_state+i)->iteration);
-        //printf("sdf: %s\n",(my_state+i)->inspectors.id);
-        printf("ptime is: %d\n",(my_ptime+i)->comp1);
-    }
+    data_var = read_data(input_directory, my_config, my_ptime);
 
+    //print_ptime(my_config, my_ptime);
 
-        //printf("inspector name: %s",my_state->inspectors);
-    //printf("pointer iteration is: %d\n",(my_state+100)->iteration);
-    //printf("pointer iteration is: %d\n",(my_state+47)->iteration);
+    flow_var = work_flow(my_config,my_ptime,my_state);
 
+    //print_state(my_state+my_config->model_type);
 
-    /*int functiondavid = 0;
-    int functionhai = 0;
+    export_var= export_files(my_config, my_state, output_directory);
 
-    functiondavid = int read_data(input_directory, struct CONFIG my_config, struct **my_ptime);
-    if (functiondavid==0){
-        break;
-    }
-
-    functionhai=int work_flow(char *config_file, struct **my_ptime, struct STATE *my_state, struct SUB_STATE **subsystem);
-    if (functionhai==0){
-        break;
-    }*/
-
+    free(my_state);
+    free(my_ptime);
     return 0;
 }
 
@@ -55,7 +58,11 @@ int main(int argc, char* argv[]) {
     char* config_name=      "./data/config.cfg";    // The output directory
     char* input_directory=  "./data/input/";        // The output directory
     char* output_directory= "./data/output/";       // The output directory
-    struct CONFIG config={.both_models=0,.model_type=2,.read_generate='r',.simlength=MAX_SIMULATION_LENGTH,.lolimit=10,.uplimit=15};
+    struct CONFIG my_config={.both_models=0,.model_type=2,.read_generate='r',.sim_length=MAX_SIMULATION_LENGTH,.lower_limit=10.0,.upper_limit=15.0};
+    struct CONFIG *config = &my_config;
+    //struct CONFIG *my_config=malloc(sizeof(struct CONFIG));
+    //struct CONFIG *config = &my_config;
+    //read_config(config_name,my_config);
     int actual_arg=1;   //Initialize the actual argument at 1
     while(actual_arg<argc) {
         if(*argv[actual_arg]=='-') { //If the argument starts with -
@@ -69,36 +76,39 @@ int main(int argc, char* argv[]) {
                 printf("-o (directory) : Allows to set the output directory.               Default is %s\n",output_directory);
                 break;
             } else if(strcmp(argv[actual_arg],"-m")==0){
-            config.model_type=0;
-            config.read_generate='\0';
-                while ((config.model_type != 1) && (config.model_type != 2)){
+                config->model_type=0;
+                config->read_generate='\0';
+                config->upper_limit=0;
+                config->lower_limit=0;
+                while ((config->model_type != 1) && (config->model_type != 2)){
                     puts("Please enter the choice of model you want for the simulation:\n");
                     puts("1: The current/old model\n");
                     puts("2: The proposed model\n");
-                    scanf("%d",&config.model_type);
-                if ((config.model_type != 1) && (config.model_type != 2)) {
+                    scanf("%d",&config->model_type);
+                if ((config->model_type != 1) && (config->model_type != 2)) {
                     puts("please type 1 or 2\n");
                 }
                 }
-                while ((config.read_generate != 'r') && (config.read_generate != 'g')){
+
+                while ((config->read_generate != 'r') && (config->read_generate != 'g')){
                     puts("Please enter the choice of input method you want for the simulation:\n");
                     puts("r: Import processing times from your file\n");
-                    puts("d: Generate processing times randomly \n");
-                    scanf("%c",&config.read_generate);
-                if ((config.read_generate != 'r') && (config.read_generate != 'g')) {
-                    puts("please type r or g\n");
-                }
-                if (config.read_generate=='g'){
-                    while (config.uplimit < config.lolimit) {
-                    printf("please insert the lower limit of process time: ");
-                    scanf("%f",&config.lolimit);
-                    printf("please insert the upper limit of process time: ");
-                    scanf("%f",&config.uplimit);
+                    puts("g: Generate processing times randomly \n");
+                    scanf(" %c",&config->read_generate);
+                    if ((config->read_generate != 'r') && (config->read_generate != 'g')) {
+                        puts("please type r or g\n");
                     }
-                printf("please enter the number of components of each type for simulation:");
-                scanf("%d",&config.simlength);
-                }else{
-                    config.simlength=MAX_SIMULATION_LENGTH;
+                    if (config->read_generate=='g'){
+                        while (config->upper_limit <= config->lower_limit) {
+                            printf("please insert the lower limit of process time: ");
+                            scanf("%f",&config->lower_limit);
+                            printf("please insert the upper limit of process time: ");
+                            scanf("%f",&config->upper_limit);
+                        }
+                    printf("please enter the number of components of each type for simulation:");
+                    scanf("%d",&config->sim_length);
+                    }else{
+                    config->sim_length=MAX_SIMULATION_LENGTH;
                 }
                 }
                 actual_arg++;
@@ -132,5 +142,5 @@ int main(int argc, char* argv[]) {
             break;
         }
     }
-    return run_simulator(config);
+    return run_simulator(config, input_directory, output_directory);
 }
