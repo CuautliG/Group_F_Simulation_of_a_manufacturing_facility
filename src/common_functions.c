@@ -34,3 +34,13 @@ void print_ptime(struct CONFIG *my_config, struct PTIME *my_ptime){
         printf("ptime ws3 is: %f\n",my_ptime->ws3[i]);
     }
 }
+
+void print_config(struct CONFIG *my_config){
+    printf("both_models, %d\n", my_config->both_models);
+    printf("model_type, %d\n", my_config->model_type);
+    printf("read_generate, %c\n",my_config->read_generate);
+    printf("sim_length, %d\n",my_config->sim_length);
+    printf("lo_limit, %f\n", my_config->lower_limit);
+    printf("up_limit, %f\n", my_config->upper_limit);
+}
+
