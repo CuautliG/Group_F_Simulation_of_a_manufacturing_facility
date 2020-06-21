@@ -1,7 +1,7 @@
 Group F - Simulation of a Manufacturing Facility
 ================================================
 
-The simulator of a manufactury facility was developed to model the assembling process of three different products. The simulator can simulate the actual working flow model or it can run a new proposed model.
+The simulator of a manufacturing facility was developed to model the assembling process of three different products. The simulator can simulate the actual working flow model or it can run a new proposed model.
 The user is able to choose which model he/she wants to simulate and the initial values of the process. If the user does not provide initial values the program uses the default values saved in a configuration file. By default the simulator needs inputs files that contains the processing times of each stage of the working process. However, the program can also generate random files in case the user specified it in the configuration file.
 At the end of each simulation the program will display the main results and it will also create report file(s) with those results. For more information about the initial values, input files or the report files of the simulator, please refer to user documentation.
 
