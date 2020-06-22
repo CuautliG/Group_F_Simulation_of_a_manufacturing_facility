@@ -1,1 +1,0 @@
-# Group_F_Simulation_of_a_manufacturing_facility
