@@ -3,48 +3,51 @@
 #include <string.h>
 #include <time.h>
 
-#include "../include/data_types.h"
-#include "../include/read_data.h"
+#include "./include/data_types.h"
+#include "./include/read_data.h"
 
 /** \brief Function to read the user input files \n
  * This function read a file and copy it values into an array.
- * \param c the variable that will store the inputs files
- * \param STR The name of the files that need to be opened
- * \param length the path where the input files are located
- * \return An array containing the user input files
+ * \param[in] times is a pointer where the values from the inputs files are saved
+ * \param[in] STR is the name of the file that need to be opened
+ * \param[in,out] length is the quantity of processing times that the function read
+ * \return An array containing the processing time of the files which are positive or
+ *     or an array that the only value given is the first element as -1
  */
-float *data(float *c, char STR[MAX_INPUT_SIZE], int *length){
+float *data(float *times, char STR[MAX_INPUT_SIZE], int *length){
         int return_var = 0;
         FILE *ins= fopen(STR,"r");                          /* Open the file containing the input values */
-        if (ins == NULL)
-        {
-            printf("-->File %s not found in the directory \n", STR);
-            return return_var = -1;
+        if (ins == NULL){
+            printf("The function data did not find the file %s\n",STR);
+            printf("->The function data needs a existent pointer to file\n"); /* Display an error message */
+            times[0] = -1.0;                                /* Assign -1.0 for the error to the first element of the array */
+            length=0;                                       /* If the error length equal to zero */
+            return times;                                   /* Return value */
         }
         int i =0;                                           /* initialize counter */
         char oneline[MAX_CHAR_SIZE];                        /* initialize variable to copy the files */
 
         while (!feof(ins)) {                                /* while there is value that haven't been copied */
             fscanf(ins,"%8s",oneline);                      /*  Read the value and store it in the variable */
-            c[i]=strtof(oneline,NULL);                      /* Store the value into a new array */
+            times[i]=strtof(oneline,NULL);                      /* Store the value into a new array */
             i++;                                            /* Increment the counter */
         }
         *length=i-1;                                        /* Store the number of the values that have been copied */
         fclose(ins);                                        /* Close the file */
 
-        return c;                                           /* Return the array containing the input files values */
+        return times;                                       /* Return the array containing the input files values */                                          /* Return the array containing the input files values */
 }
 
 /** \brief Function to save the read input files into the structure \n
  * This function initialize all the necessary components to read the files
- * \param input_directory the path where the input files are located
- * \param my_ptime the variable that will store the processing times
- * \param length_files the amount of values read from the files
- * \return length_files the amount of values read from the files
+ * \param[in] input_directory is the directory where the input files are saved
+ * \param[in,out] my_ptime is a pointer where the processing times are saved
+ * \param[in,out] length_files is the quantity of processing times that the function read
+ * \return The length of the files and it updates the values of my_ptime.
+ *     If the length of the files is equal 0, it means that there was a problem reading a file
  */
 int read_client_files(char *input_directory, struct PTIME *my_ptime,int length_files){
-    int return_var = 0;
-    float array[MAX_SIMULATION_LENGTH] = {'\0'};                                                         /* Array to store the values of the input files */
+    float array[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
     char* components[] = {"ser1.dat", "ser2.dat", "ser3.dat", "ws1.dat", "ws2.dat", "ws3.dat"}; /* Array containing the name of the files to open */
     char long_str[NUMB_INPUT_FILES][MAX_INPUT_SIZE] = {'\0'};                                   /* Array containing the full path of the files to open */
 
@@ -60,57 +63,64 @@ int read_client_files(char *input_directory, struct PTIME *my_ptime,int length_f
     my_ptime->ws1=data(array,long_str[3], &length_files);               /* Store the values of the input files into the structure */
     my_ptime->ws2=data(array,long_str[4], &length_files);               /* Store the values of the input files into the structure */
     my_ptime->ws3=data(array,long_str[5], &length_files);               /* Store the values of the input files into the structure */
- /*   if (length_files < 0)
-    {
-      printf("-->The files do not contains any values");
-      return return_var = -2;
-    }*/
 
     return length_files;                                                /* Return the number of values retrieved */
 }
 
-/** \brief Function to initialize the necessary parameters to generate random values \n
- *
- * \param input_directory the path where the input files are located
- * \param my_config the user choices that will decide if the function will read from files or generate random inputs
- * \param my_ptime the variable that will store the processing times
- * \return 0 if an error occurs during the execution or 1 the files were properly read or generated.
+/** \brief Function saves my_ptime when are random values \n
+ * This functions assign the processing time in a specific place in my_ptime
+ * \param[in] input_directory the path where the input files are located
+ * \param[in] my_config is the configuration that the simulator uses to run
+ * \param[in,out] my_ptime is a pointer to array where the processing times are saved
+ * \return 0 if my_ptime was update successfully, -2 if there was a problem with the limits in the configuration file,
+ *     -3 if there was a problem with the simulation length.
  */
-void generate_random_time (char *input_directory, struct CONFIG *my_config, struct PTIME* my_ptime){
-    float array[MAX_SIMULATION_LENGTH] = {'\0'}; /* Array to store the values of the input files */
+int generate_random_time (char *input_directory, struct CONFIG *my_config, struct PTIME* my_ptime){
+    int return_var = 0;
+    float array[MAX_SIMULATION_LENGTH]; /* Array to store the values of the input files */
 
-    my_ptime->comp1 = generate_random(array,  my_config);          /* Store the values that were randomly generated into the structure */
-    my_ptime->comp2 = generate_random(array,  my_config);          /* Store the values that were randomly generated into the structure */
-    my_ptime->comp3 = generate_random(array,  my_config);          /* Store the values that were randomly generated into the structure */
-    my_ptime->ws1 = generate_random(array,  my_config);            /* Store the values that were randomly generated into the structure */
-    my_ptime->ws2 = generate_random(array,  my_config);            /* Store the values that were randomly generated into the structure */
-    my_ptime->ws3 = generate_random(array,  my_config);            /* Store the values that were randomly generated into the structure */
+    my_ptime->comp1 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
+    my_ptime->comp2 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
+    my_ptime->comp3 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
+    my_ptime->ws1 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
+    my_ptime->ws2 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
+    my_ptime->ws3 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
+
+    /* If the first element of any of the processing times is equal -2 it means there was a problem with the limits*/
+    if (my_ptime->comp1[0]==-2.00||my_ptime->comp2[0]==-2.00||my_ptime->comp3[0]==-2.00||my_ptime->ws1[0]==-2.00||my_ptime->ws1[0]==-2.00||my_ptime->ws1[0]==-2.00){
+        return return_var = -2;                                 /* Return value */
+    }
+    /* If the first element of any of the processing times is equal -3 it means there was a problem with the simulation length*/
+    if (my_ptime->comp1[0]==-3.00||my_ptime->comp2[0]==-3.00||my_ptime->comp3[0]==-3.00||my_ptime->ws1[0]==-3.00||my_ptime->ws1[0]==-3.00||my_ptime->ws1[0]==-3.00){
+        return return_var = -3;                                 /* Return value */
+    }
+    return return_var;
 }
 
 /** \brief Function to generate random number \n
- *
- * \param rand_numb the variable that will store the inputs files
- * \param my_config the user choices that will decide if the function will read from files or generate random inputs
- * \return rand_numb the array that contains the randomly generated values
+ * This function uses the configuration file to create an array of random values
+ * \param[in] my_config is the configuration that the simulator uses to run
+ * \param[in] rand_numb is a pointer where the processing times are saved
+ * \return An array containing the processing time of the files which are positive if there was no problem or an array that the only
+ *     value given is the first element as -2 or -3. -2 for a problems with the limits and -3 for problem with the simulation length
  */
-
-float *generate_random(float *rand_numb, struct CONFIG *my_config){
-    int return_var = 0;
+float *generate_random(struct CONFIG *my_config,float *rand_numb){
     float upper = my_config->upper_limit;                           /* Variable of the upper limit of the processing time */
     float lower = my_config->lower_limit;                           /* Variable of the lower limit of the processing time */
-    if (lower > upper)
-    {
-        printf("-->The upper value need to be higher than the lower value\n");
-        return return_var = -2;
+    if (lower > upper){
+        printf("The function generate_random received upper_limit=%d and lower_limit=%d\n",upper,lower);
+        printf("->The function generate_random needs the upper value need to be higher than the lower value\n");
+        rand_numb[0] = -2.0;
+        return rand_numb;
     }
 
-    if (my_config->sim_length < 0)
-    {
-        printf("-->The number of components need to be a positif number\n");
-        return return_var = -3;
+    if (my_config->sim_length < 0){
+        printf("The function generate_random received sim_length=%d\n",my_config->sim_length);
+        printf("->The function generate_random needs the number of components need to be a positive number\n");
+        rand_numb[0] = -3.0;
+        return rand_numb;
     }
     float ran_num_generator = 0;                                        /* Variable to store the generated number */
-    printf("%d\n", my_config->sim_length);
     for(int i = 0; i<my_config->sim_length; i++)                    /* While the last value of the simulation length haven't been reached */
     {
     ran_num_generator = lower + (float)rand() / (RAND_MAX / (upper - lower ) + 1); /* Function to generate random values */
@@ -121,30 +131,32 @@ float *generate_random(float *rand_numb, struct CONFIG *my_config){
 
 /** \brief Function to read or generate the inputs of the program \n
  * This function accept the user input and either read values from .dat files or generate random number between a range give by the user
- * \param input_directory the path where the input files are located
- * \param my_config the user choices that will decide if the function will read from files or generate random inputs
- * \param my_ptime the variable that will store the processing times
- * \return 0 if an error occurs during the execution or 1 the files were properly read or generated.
+ * \param[in] input_directory is the directory where the input files are saved
+ * \param[in,out] my_config is the configuration that the simulator uses to run
+ * \param[in,out] my_ptime is a pointer to array where the processing times are saved
+ * \return 1 the files were properly read or generated. -1 If there was a problem reading the data. -2 if there was a problem with
+ *     the limits in the configuration file, -3 if there was a problem with the simulation length and -4 if the option for read_generate
+ *     is different than 'r' and 'g'.
 */
 int read_data(char *input_directory, struct CONFIG *my_config, struct PTIME *my_ptime){
+    int generate_var = 0;
     int return_var = 0;
     int length_files = 0;                                               /* the amount of values that will be read from the files */
-    if (my_config->read_generate == 'r')                            /* If the choice is to read from user files */
-        {
+    if (my_config->read_generate == 'r'){                               /* If the choice is to read from user files */
             if(read_client_files(input_directory, my_ptime,length_files)<=0){ /* If the function can't be called  */
-                puts("Error reading the files\n");
+                return return_var = -1; /* Error reading files */
             }else{
                 my_config->sim_length=read_client_files(input_directory, my_ptime,length_files); /* Call the function to read user input files */
             }
+    } else if (my_config->read_generate == 'g') {                   /* If the choice is to generate random values */
+        generate_var = generate_random_time (input_directory, my_config, my_ptime);/* Call the function to generate random values */
+        if(generate_var<0){                                         /* If there was an error */
+                return return_var = generate_var;
         }
-    else if (my_config->read_generate == 'g')                       /* If the choice is to generate random values */
-        {
-        generate_random_time (input_directory, my_config, my_ptime);/* Call the function to generate random values */
-        }
-    else
-    {
-        printf("-->The user choice is not valid\n");
+    } else {
+        printf("The function read_data received read_generate=%c\n",my_config->read_generate);
+        printf("->The function read_data needs that the variable read_generate has the character 'r' or 'g'\n");
         return return_var = -4;
     }
-
-    }
+    return return_var=1;
+}
