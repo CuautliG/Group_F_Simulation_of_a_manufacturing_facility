@@ -61,12 +61,14 @@ int run_simulator(struct CONFIG *my_config, char* input_directory, char* output_
     free(my_state);
     free(my_ptime);
 
+
     if(return_var!=0){                                              /* If an error happened during the execution*/
         printf("Error in one or more functions, please see below the errors");
     }else{                                                          /* If everything run well */
         printf("The simulator modeled the manufacturing facility correctly");
         return return_var;
     }
+
 }
 
 /** \brief Main function of the simulator. \n
@@ -80,6 +82,7 @@ int run_simulator(struct CONFIG *my_config, char* input_directory, char* output_
  * @return 0 if the application executed successfully.  Any other number if their was an error during the execution.
  */
 int main(int argc, char* argv[]) {
+
     char* config_name=      "./data/config.cfg";    /* Default configuration file */
     char* input_directory=  "./data/input/";        /* Default input directory */
     char* output_directory= "./data/output/";       /* Default output directory */
@@ -100,6 +103,7 @@ int main(int argc, char* argv[]) {
                 printf("-i (directory) : Allows to set the input directory.                Default is %s\n",input_directory);
                 printf("-o (directory) : Allows to set the output directory.               Default is %s\n",output_directory);
                 break;
+
             } else if(strcmp(argv[actual_arg],"-m")==0){ /* If the argument is -m */
                 /* Restart the values from the config structure */
                 config->model_type=0;
