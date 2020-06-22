@@ -7,5 +7,3 @@ int *counters(float *internal_process_time, int *c1_in_buffer, int c2_in_buffer2
 int *buffer1(int *c1_in_buffer,int c2_in_buffer2, int c3_in_buffer3, int model_type);
 
 #endif // WORK_FLOW_H_INCLUDED
-
-
