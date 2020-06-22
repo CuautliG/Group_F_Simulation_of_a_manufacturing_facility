@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/data_types.h"
-#include "../include/read_config.h"
+#include "./include/data_types.h"
+#include "./include/read_config.h"
 /**
 * The function is used for tokenization, it split each line by a delimiter "="
 * @param[in] input_line of config file
