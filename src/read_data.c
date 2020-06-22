@@ -47,7 +47,12 @@ float *data(float *times, char STR[MAX_INPUT_SIZE], int *length){
  *     If the length of the files is equal 0, it means that there was a problem reading a file
  */
 int read_client_files(char *input_directory, struct PTIME *my_ptime,int length_files){
-    float array[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array1[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array2[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array3[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array4[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array5[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array6[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
     char* components[] = {"ser1.dat", "ser2.dat", "ser3.dat", "ws1.dat", "ws2.dat", "ws3.dat"}; /* Array containing the name of the files to open */
     char long_str[NUMB_INPUT_FILES][MAX_INPUT_SIZE] = {'\0'};                                   /* Array containing the full path of the files to open */
 
@@ -57,12 +62,12 @@ int read_client_files(char *input_directory, struct PTIME *my_ptime,int length_f
         strncat(long_str[i], components[i], MAX_ARRAY_SIZE);            /* Copy the files names in the array after the path */
     }
 
-    my_ptime->comp1=data(array,long_str[0], &length_files);             /* Store the values of the input files into the structure */
-    my_ptime->comp2=data(array,long_str[1], &length_files);             /* Store the values of the input files into the structure */
-    my_ptime->comp3=data(array,long_str[2], &length_files);             /* Store the values of the input files into the structure */
-    my_ptime->ws1=data(array,long_str[3], &length_files);               /* Store the values of the input files into the structure */
-    my_ptime->ws2=data(array,long_str[4], &length_files);               /* Store the values of the input files into the structure */
-    my_ptime->ws3=data(array,long_str[5], &length_files);               /* Store the values of the input files into the structure */
+    my_ptime->comp1=data(array1,long_str[0], &length_files);             /* Store the values of the input files into the structure */
+    my_ptime->comp2=data(array2,long_str[1], &length_files);             /* Store the values of the input files into the structure */
+    my_ptime->comp3=data(array3,long_str[2], &length_files);             /* Store the values of the input files into the structure */
+    my_ptime->ws1=data(array4,long_str[3], &length_files);               /* Store the values of the input files into the structure */
+    my_ptime->ws2=data(array5,long_str[4], &length_files);               /* Store the values of the input files into the structure */
+    my_ptime->ws3=data(array6,long_str[5], &length_files);               /* Store the values of the input files into the structure */
 
     return length_files;                                                /* Return the number of values retrieved */
 }
@@ -77,14 +82,19 @@ int read_client_files(char *input_directory, struct PTIME *my_ptime,int length_f
  */
 int generate_random_time (char *input_directory, struct CONFIG *my_config, struct PTIME* my_ptime){
     int return_var = 0;
-    float array[MAX_SIMULATION_LENGTH]; /* Array to store the values of the input files */
+    float array1[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array2[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array3[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array4[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array5[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array6[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
 
-    my_ptime->comp1 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
-    my_ptime->comp2 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
-    my_ptime->comp3 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
-    my_ptime->ws1 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
-    my_ptime->ws2 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
-    my_ptime->ws3 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
+    my_ptime->comp1 = generate_random(my_config,array1);          /* Store the values that were randomly generated into the structure */
+    my_ptime->comp2 = generate_random(my_config,array2);          /* Store the values that were randomly generated into the structure */
+    my_ptime->comp3 = generate_random(my_config,array3);          /* Store the values that were randomly generated into the structure */
+    my_ptime->ws1 = generate_random(my_config,array4);            /* Store the values that were randomly generated into the structure */
+    my_ptime->ws2 = generate_random(my_config,array5);            /* Store the values that were randomly generated into the structure */
+    my_ptime->ws3 = generate_random(my_config,array6);            /* Store the values that were randomly generated into the structure */
 
     /* If the first element of any of the processing times is equal -2 it means there was a problem with the limits*/
     if (my_ptime->comp1[0]==-2.00||my_ptime->comp2[0]==-2.00||my_ptime->comp3[0]==-2.00||my_ptime->ws1[0]==-2.00||my_ptime->ws1[0]==-2.00||my_ptime->ws1[0]==-2.00){
