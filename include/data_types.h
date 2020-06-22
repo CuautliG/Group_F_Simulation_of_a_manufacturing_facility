@@ -5,6 +5,13 @@
 #define SIM_STATES 3
 #define MAX_LINE_LENGTH 4096
 #define PRODUCTS 3
+#define MAX_BUFFER 2
+#define MAX_SIZE_FILENAME 30
+#define MAX_ARRAY_SIZE 20
+#define MAX_CHAR_SIZE 8
+#define NUMB_INPUT_FILES 6
+#define MAX_INPUT_SIZE 23
+#define INPUT_DIRECTORY_SIZE 13
 
 /** \brief Configuration structure. \n
  * It contains all the initial values that the simulator needs to run.
@@ -34,6 +41,7 @@ struct INSPECTOR{
  *
  */
 struct STATE{
+    int model_type;                 /**< Model type of the state */
     int sim_length;                 /**< Simulation length variable */
     float clock;                    /**< Simulation clock */
     int produced_prod[PRODUCTS];    /**< Produced product after simulation */
