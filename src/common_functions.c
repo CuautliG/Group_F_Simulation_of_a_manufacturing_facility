@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/data_types.h"
-#include "../include/common_functions.h"
+#include "./include/data_types.h"
+#include "./include/common_functions.h"
 
+/** \brief Function to print my_state. \n
+ * This function takes the paramater from my_state and it displays the values to the user in a report form
+ * \param[in] my_state is the state of the simulator on a specific model
+ */
 void print_state(struct STATE *my_state){
     printf("------------- SIMULATION REPORT FOR MODEL %d -------------\n",my_state->model_type);
     printf("Number of components of each types ready for the simulation: %d\n",my_state->sim_length);
@@ -24,6 +28,12 @@ void print_state(struct STATE *my_state){
     printf("Idleness of inspector 2: %f min\n", my_state->inspector2.idle_time/my_state->clock);
 }
 
+/** \brief Function to print my_ptime. \n
+ * This function print all the processing times that are saved in my_ptime
+ * \param[in] my_config is the configuration that the simulator uses to run
+ * \param[in] my_ptime is the processing times that the simulator has saved
+ * \return
+ */
 void print_ptime(struct CONFIG *my_config, struct PTIME *my_ptime){
     for (int i=0; i<my_config->sim_length; i++){
         printf("ptime c1 is: %f\n",my_ptime->comp1[i]);
@@ -35,6 +45,10 @@ void print_ptime(struct CONFIG *my_config, struct PTIME *my_ptime){
     }
 }
 
+/** \brief Function to print my_config. \n
+ * This function prints the actual values in the configuration of the simulator.
+ * \param[in] my_config is the configuration that the simulator uses to run
+ */
 void print_config(struct CONFIG *my_config){
     printf("both_models, %d\n", my_config->both_models);
     printf("model_type, %d\n", my_config->model_type);
@@ -43,4 +57,3 @@ void print_config(struct CONFIG *my_config){
     printf("lo_limit, %f\n", my_config->lower_limit);
     printf("up_limit, %f\n", my_config->upper_limit);
 }
-
