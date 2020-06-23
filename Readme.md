@@ -41,7 +41,7 @@ File Structure
   * output
   * config.cfg
 * doc
-  * doxygen_config.cfg
+  * doxyfile.cfg
 * include
   * common_functions.h
   * data_types.h
@@ -68,6 +68,8 @@ File Structure
       * ws3.dat
     * output
     * config.cfg
+    * config1.cfg
+    * config2.cfg
   * include
     * common_functions_test.h
     * data_types_test.h
