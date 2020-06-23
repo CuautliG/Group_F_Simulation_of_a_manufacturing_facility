@@ -15,11 +15,10 @@ build_folder := $(shell mkdir -p test/build)
 output_folder := $(shell mkdir -p test/output)
 
 #Default command
-all: app test
+all: app
 
 app: main.o read_config.o read_data.o work_flow.o export_files.o common_functions.o
 	$(CC) -g -o bin/Group_F_Simulation_of_a_manufacturing_facility build/main.o build/read_config.o build/read_data.o build/work_flow.o build/export_files.o build/common_functions.o
-
 
 #Command of the program	
 
@@ -65,6 +64,7 @@ export_files_test.o: test/src/export_files_test.c
 common_functions_test.o : test/src/common_functions_test.c
 	$(CC) -g -c $(CFLAGS) test/src/common_functions_test.c -o test/build/common_functions_test.o
 
+
 #This command run the program
 run:
 	bin/Group_F_Simulation_of_a_manufacturing_facility 
@@ -75,5 +75,6 @@ run_test:
 doxygen:
 	rm -f -r ./doc/detailed
 	doxygen ./doc/doxyfile.cfg
+  
 clean:
 	rm -f bin/* build/* data/output/* test/bin/* test/build/* test/output/*
