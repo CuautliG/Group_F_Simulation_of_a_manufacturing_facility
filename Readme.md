@@ -28,7 +28,7 @@ File Structure
 ================================================
  
 * LICENSE  
-* Makefile  
+* makefile  
 * README.md   
 * data
   * input
@@ -57,7 +57,7 @@ File Structure
   * read_config.c
   * read_data.c
   * work_flow.c
-* Test
+* test
   * data
     * input
       * ser1.dat
