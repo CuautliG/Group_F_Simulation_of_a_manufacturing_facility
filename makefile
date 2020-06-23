@@ -74,6 +74,6 @@ run_test:
 
 doxygen:
 	rm -f -r ./doc/detailed
-	doxygen ./doc/doxygen_config.cfg
+	doxygen ./doc/doxyfile.cfg
 clean:
 	rm -f bin/* build/* data/output/* test/bin/* test/build/* test/output/*
