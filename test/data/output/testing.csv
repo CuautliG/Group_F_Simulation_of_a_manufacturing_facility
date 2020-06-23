@@ -1,0 +1,17 @@
+------------- SIMULATION REPORT FOR MODEL 2 -------------
+Number of components of each types ready for the simulation: 9
+Simulation time: 158.562012
+Number of C1 used for simulation: 9
+Number of C2 used for simulation: 5
+Number of C3 used for simulation: 7
+Number of C1 unused for simulation: 5
+Number of C2 unused for simulation: 5
+Number of C3 unused for simulation: 5
+Number of produced P1: 4
+Number of produced P2: 4
+Number of produced P3: 4
+Average number of P1 per minute: 0.025227
+Average number of P2 per minute: 0.025227
+Average number of P3 per minute: 0.025227
+Idleness of inspector 1: 0.000000
+Idleness of inspector 2: 0.515250
