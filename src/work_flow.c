@@ -3,8 +3,8 @@
 #include <time.h>
 #include <float.h>
 
-#include "../include/data_types.h"
-#include "../include/work_flow.h"
+#include "./include/data_types.h"
+#include "./include/work_flow.h"
 
 /** \brief Function to find the minimum positive float number among 5 inputs. \n
  * This function is used to find the time interval from the current time to the event. If the output is not satisfied the function's purpose the error message will appear
@@ -251,7 +251,7 @@ int work_flow(struct CONFIG *my_config,struct PTIME *my_ptime, struct STATE *my_
     int lengthw1=my_config->sim_length; /* number of time intervals for assembling P1 for simulation*/
     int lengthw2=my_config->sim_length; /* number of time intervals for assembling P2 for simulation*/
     int lengthw3=my_config->sim_length; /* number of time intervals for assembling P3 for simulation*/
-    int mod_type=0;                     /* Model choice*/
+    int mod_type=my_config->model_type; /* Model choice*/
     float *pointer_proc_time_c1=my_ptime->comp1; /* address of processing time C1*/
 
     float *pointer_proc_time_c2=my_ptime->comp2; /* address of processing time C2*/
@@ -259,23 +259,8 @@ int work_flow(struct CONFIG *my_config,struct PTIME *my_ptime, struct STATE *my_
     float *pointer_proc_time_w1=my_ptime->ws1; /* address of processing time P1*/
     float *pointer_proc_time_w2=my_ptime->ws2; /* address of processing time P2*/
     float *pointer_proc_time_w3=my_ptime->ws3; /* address of processing time P3*/
-    int times=0; /* Repetition of the process */
-    int verification=0; /* Verification of both models */
     /*=================END OF READING DATA=======================*/
     /*==================Initial conditions====================*/
-
-    if(my_config->both_models==1){ /* both models or not */
-        times=2; /* two times*/
-    }else{
-        times=1; /* one time*/
-    }
-    for(int act_model=0;act_model<times;act_model++){
-        if(times==1){ /* one time read the config file */
-            mod_type=my_config->model_type; /* Choice from configuration file */
-        }else{
-            mod_type=act_model+1; /* Run old and new model that are saved in position 1 and 2 of the array */
-        }
-
     float internal_process_time[5]={0.0,0.0,0.0,0.0,0.0};
     float idle_time_insp1=0.0, idle_time_insp2=0.0;
     int comp_type_kept_by_insp2=0;
@@ -456,7 +441,7 @@ int work_flow(struct CONFIG *my_config,struct PTIME *my_ptime, struct STATE *my_
     float lambda_hat2=L2/W2;
     float lambda_hat3=L3/W3;
     /* Upload the simulation result to my_state pointer*/
-    (my_state+mod_type)->model_type=mod_type;
+    (my_state+mod_type)->model_type=my_config->model_type;
     (my_state+mod_type)->sim_length=my_config->sim_length;
     (my_state+mod_type)->clock=clock;
     (my_state+mod_type)->produced_prod[0]=num_product[0];
@@ -473,15 +458,11 @@ int work_flow(struct CONFIG *my_config,struct PTIME *my_ptime, struct STATE *my_
 
     /* Check the verification by Little's Law*/
     if (((abs(lambda1-lambda_hat1)) < 0.001) && ((abs(lambda2-lambda_hat2)) < 0.001) && ((abs(lambda3-lambda_hat3)) < 0.001)){
-        verification++;
-    }
-    }
-
-    /* If the system was verified by Little's Law*/
-    if( (my_config->both_models==0 && verification>0 )|| (my_config->both_models==1 && verification>1 ) ){
         return 0; /*the function runs successfully*/
-    } else {
-        puts("Error in work_flow function: The verification failed in a model ");
+
+    }
+    else {
+        puts("Error in work_flow function: The verification failed ");
         puts("Expected: the verification must be qualified ");
         return -6; /*the function runs unsuccessfully*/
     }
