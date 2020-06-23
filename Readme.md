@@ -30,42 +30,66 @@ To run, you must first install it. Then you can follow instructions mentioned in
 [User\_Manual.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/tree/master/doc/User_Manual.md).
 
 File Structure
-==============
-
-The correct file structure (after installing GSL library should be follow and run the binary)
+================================================
 
 * INSTALL.md  
 * LICENSE  
 * Makefile  
-* README.md  
-* bin  
-* doc
+* README.md   
 * data
   * input
-    * servinsp1.dat
-    * servinsp22.dat
-    * servinsp23.dat
+    * ser1.dat
+    * ser2.dat
+    * ser3.dat
     * ws1.dat
     * ws2.dat
     * ws3.dat
-
- * output
-    * results.csv
+  * output
+  * config.cfg
+* doc
+  * doxygen_config.cfg
 * include
-  * data\_types.h
-  * export.h
+  * common_functions.h
+  * data_types.h
+  * export_files.h
   * main.h
-  * read\_config.h
-  * read\_data.h
-  * work\_flow.h
+  * read_config.h
+  * read_data.h
+  * work_flow.h
 * src
-  * export.c
+  * common_functions.c
+  * export_files.c
   * main.c
-  * read\_config.c
-  * read\_data.c
-  * work\_flow.c
-  * sensor.c
+  * read_config.c
+  * read_data.c
+  * work_flow.c
 * Test
+  * data
+    * input
+      * ser1.dat
+      * ser2.dat
+      * ser3.dat
+      * ws1.dat
+      * ws2.dat
+      * ws3.dat
+    * output
+    * config.cfg
+  * include
+    * common_functions_test.h
+    * data_types_test.h
+    * export_files_test.h
+    * main_test.h
+    * read_config_test.h
+    * read_data_test.h
+    * work_flow_test.h
+  * src
+    * common_functions_test.c
+    * data_types_test.c
+    * export_files_test.c
+    * main_test.c
+    * read_config_test.c
+    * read_data_test.c
+    * work_flow_test.c
 
 Documentation
 =============
