@@ -89,7 +89,7 @@ Documentation
 =============
 
 The User manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki/User-Documentation#user-documentation)
-The developer manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
+The developer manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki/Developer-Documentation#developer-documentation)
 
 License
 =======
