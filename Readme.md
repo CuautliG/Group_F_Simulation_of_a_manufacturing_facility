@@ -18,28 +18,18 @@ Group Information
 4. **Imbie David Nku**
    * GitHub:  **_panakou_**
 
-Installation
-============
-
-Installation steps are mentioned in [INSTALL.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/tree/master/INSTALL.md)
-
 Usage
 =====
 
-To run, you must first install it. Then you can follow instructions mentioned in
-[User\_Manual.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/tree/master/doc/User_Manual.md).
+To run this program, you will need to download all its files and then follow the instructions mentioned in
+[User\_Manual.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki/User-Documentation#user-documentation)
 
 File Structure
-==============
-
-The correct file structure (after installing GSL library should be follow and run the binary)
-
-* INSTALL.md  
+================================================
+ 
 * LICENSE  
-* Makefile  
-* README.md  
-* bin  
-* doc
+* makefile  
+* README.md   
 * data
   * input
     * ser1.dat
@@ -48,37 +38,67 @@ The correct file structure (after installing GSL library should be follow and ru
     * ws1.dat
     * ws2.dat
     * ws3.dat
-
- * output
-    * results.csv
+  * output
+  * config.cfg
+* doc
+  * doxyfile.cfg
 * include
-  * data\_types.h
-  * export.h
+  * common_functions.h
+  * data_types.h
+  * export_files.h
   * main.h
-  * read\_config.h
-  * read\_data.h
-  * work\_flow.h
+  * read_config.h
+  * read_data.h
+  * work_flow.h
 * src
-  * export.c
+  * common_functions.c
+  * export_files.c
   * main.c
-  * read\_config.c
-  * read\_data.c
-  * work\_flow.c
-  * sensor.c
-* Test
+  * read_config.c
+  * read_data.c
+  * work_flow.c
+* test
+  * data
+    * input
+      * ser1.dat
+      * ser2.dat
+      * ser3.dat
+      * ws1.dat
+      * ws2.dat
+      * ws3.dat
+    * output
+    * config.cfg
+    * config1.cfg
+    * config2.cfg
+  * include
+    * common_functions_test.h
+    * data_types_test.h
+    * export_files_test.h
+    * main_test.h
+    * read_config_test.h
+    * read_data_test.h
+    * work_flow_test.h
+  * src
+    * common_functions_test.c
+    * data_types_test.c
+    * export_files_test.c
+    * main_test.c
+    * read_config_test.c
+    * read_data_test.c
+    * work_flow_test.c
 
 Documentation
 =============
 
-The User manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
-The developer manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
+The User manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki/User-Documentation#user-documentation)
+The developer manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki/Developer-Documentation#developer-documentation)
 
 License
 =======
 
-This project is licensed under the GPL 2.0 License - see the LICENSE.md file for details
+This project is licensed under the GPL 3.0 License - see the LICENSE.md file for details
 
 Acknowledgements
 ================
 
-Thank to Dr. Cristina Ruiz Martin for providing guidance on how to develop the software.
+We would like to thank our professor Cristina Ruiz Martin for all the guidance through the entire project

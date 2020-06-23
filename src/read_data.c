@@ -11,7 +11,7 @@
  * \param[in] times is a pointer where the values from the inputs files are saved
  * \param[in] STR is the name of the file that need to be opened
  * \param[in,out] length is the quantity of processing times that the function read
- * \return An array containing the processing time of the files which are positive or
+ * \return An array containing the processing time of the files which are positive
  *     or an array that the only value given is the first element as -1
  */
 float *data(float *times, char STR[MAX_INPUT_SIZE], int *length){
@@ -111,7 +111,7 @@ int generate_random_time (char *input_directory, struct CONFIG *my_config, struc
  * This function uses the configuration file to create an array of random values
  * \param[in] my_config is the configuration that the simulator uses to run
  * \param[in] rand_numb is a pointer where the processing times are saved
- * \return An array containing the processing time of the files which are positive if there was no problem or an array that the only
+ * \return An array containing the processing time of the files which are positive or an array that the only
  *     value given is the first element as -2 or -3. -2 for a problems with the limits and -3 for problem with the simulation length
  */
 float *generate_random(struct CONFIG *my_config,float *rand_numb){

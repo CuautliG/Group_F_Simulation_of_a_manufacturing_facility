@@ -24,8 +24,8 @@ void print_state(struct STATE *my_state){
     printf("Average number of P1 per minute: %f\n",my_state->produced_prod[0]/my_state->clock);
     printf("Average number of P2 per minute: %f\n",my_state->produced_prod[1]/my_state->clock);
     printf("Average number of P3 per minute: %f\n",my_state->produced_prod[2]/my_state->clock);
-    printf("Idleness of inspector 1 per minute: %f \n", my_state->inspector1.idle_time/my_state->clock);
-    printf("Idleness of inspector 2 per minute: %f \n", my_state->inspector2.idle_time/my_state->clock);
+    printf("Idleness of inspector 1 per minute: %f\n", my_state->inspector1.idle_time/my_state->clock);
+    printf("Idleness of inspector 2 per minute: %f\n\n", my_state->inspector2.idle_time/my_state->clock);
 }
 
 /** \brief Function to print my_ptime. \n
