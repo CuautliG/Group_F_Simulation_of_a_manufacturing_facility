@@ -16,6 +16,7 @@ all: app
 app: main.o read_config.o read_data.o work_flow.o export_files.o common_functions.o
 	$(CC) -g -o bin/Group_F_Simulation_of_a_manufacturing_facility build/main.o build/read_config.o build/read_data.o build/work_flow.o build/export_files.o build/common_functions.o
 
+
 #Command of the program	
 
 main.o: src/main.c
@@ -36,13 +37,11 @@ export_files.o: src/export_files.c
 common_functions.o : src/common_functions.c
 	$(CC) -g -c $(CFLAGS) src/common_functions.c -o build/common_functions.o
 
-
 #This command run the program
 run:
 	bin/Group_F_Simulation_of_a_manufacturing_facility 
-
 doxygen:
 	rm -f -r ./doc/detailed
-	doxygen ./doc/doxyfile.cfg
+	doxygen ./doc/doxygen_config.cfg
 clean:
 	rm -f bin/* build/*
