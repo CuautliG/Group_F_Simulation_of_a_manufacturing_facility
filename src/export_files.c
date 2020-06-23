@@ -3,9 +3,9 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include "./include/data_types.h"
-#include "./include/export_files.h"
-#include "./include/common_functions.h"
+#include "../include/data_types.h"
+#include "../include/export_files.h"
+#include "../include/common_functions.h"
 
 /** \brief Function to export the analysis of the simulator. \n
  * This function reads the states of the simulators and analyze both model to determinate which model is better.
@@ -234,11 +234,7 @@ int export_files(struct CONFIG *my_config, struct STATE *my_state, char *output_
     }
 
     if (stat(output_directory, &folder_status)== -1 ){  /* If the output directory does not exist stat returns -1 */
-        #ifdef __linux__                                /* If the operative system is based on Linux */
             mkdir(output_directory,0777);               /* Create directory with read, write, & execute for everyone */
-        #else                                           /* If the operative system is based on Windows */
-            mkdir(output_directory,0777);               /* Create directory with read, write, & execute for everyone */
-        #endif
     }
 
     //Assign a memory for the full directory name
@@ -270,6 +266,6 @@ int export_files(struct CONFIG *my_config, struct STATE *my_state, char *output_
             return return_var;                          /* Return the variable with a value of zero */
         }
     }else{
-        return return_var;                                      /* Return the value of the return variable*/
+        return return_var;                              /* Return the value of the return variable*/
     }
 }
