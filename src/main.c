@@ -52,7 +52,12 @@ int run_simulator(struct CONFIG *my_config, char* input_directory, char* output_
     }
 
     #ifdef DEBUG_ENABLED
-        print_state(my_state);
+        if(my_config->both_models==1){
+            print_state(my_state+1);
+            print_state(my_state+2);
+        }else{
+            print_state(my_state+my_config->model_type);
+        }
     #endif
 
     export_var= export_files(my_config, my_state, output_directory);/* Call export_files and save its return value */
