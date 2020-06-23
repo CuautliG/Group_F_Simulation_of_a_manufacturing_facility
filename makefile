@@ -36,7 +36,7 @@ work_flow.o: src/work_flow.c
 	$(CC) -g -c $(CFLAGS) src/work_flow.c -o build/work_flow.o
 
 export_files.o: src/export_files.c
-	$(CC) -g -c $(CFLAGS) src\export_files.c -o build/export_files.o
+	$(CC) -g -c $(CFLAGS) src/export_files.c -o build/export_files.o
 
 common_functions.o : src/common_functions.c
 	$(CC) -g -c $(CFLAGS) src/common_functions.c -o build/common_functions.o
