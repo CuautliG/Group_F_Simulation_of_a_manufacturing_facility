@@ -4,9 +4,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "./include/common_functions.h"
-#include "./include/data_types.h"
-#include "./include/export_files.h"
+#include "../include/common_functions.h"
+#include "../include/data_types.h"
+#include "../include/export_files.h"
 
 /** \brief Function to export the main results of the simulator. \n
  * This function reads the state structure and displays the main results of the simulator. These results are also exported into
