@@ -42,9 +42,9 @@ The correct file structure (after installing GSL library should be follow and ru
 * doc
 * data
   * input
-    * servinsp1.dat
-    * servinsp22.dat
-    * servinsp23.dat
+    * ser1.dat
+    * ser2.dat
+    * ser3.dat
     * ws1.dat
     * ws2.dat
     * ws3.dat
