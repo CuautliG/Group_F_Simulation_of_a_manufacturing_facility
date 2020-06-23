@@ -94,7 +94,7 @@ The developer manual is available [here](https://github.com/CuautliG/Group_F_Sim
 License
 =======
 
-This project is licensed under the GPL 2.0 License - see the LICENSE.md file for details
+This project is licensed under the GPL 3.0 License - see the LICENSE.md file for details
 
 Acknowledgements
 ================
