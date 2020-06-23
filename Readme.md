@@ -18,21 +18,15 @@ Group Information
 4. **Imbie David Nku**
    * GitHub:  **_panakou_**
 
-Installation
-============
-
-Installation steps are mentioned in [INSTALL.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/tree/master/INSTALL.md)
-
 Usage
 =====
 
 To run this program, you will need to download all its files and then follow the instructions mentioned in
-[User\_Manual.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/tree/master/doc/User_Manual.md).
+[User\_Manual.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
 
 File Structure
 ================================================
-
-* INSTALL.md  
+ 
 * LICENSE  
 * Makefile  
 * README.md   
