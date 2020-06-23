@@ -3,8 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-#include "./include/data_types.h"
-#include "./include/read_data.h"
+#include "../include/data_types.h"
+#include "../include/read_data.h"
 
 /** \brief Function to read the user input files \n
  * This function read a file and copy it values into an array.

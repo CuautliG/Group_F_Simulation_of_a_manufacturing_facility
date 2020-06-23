@@ -3,8 +3,8 @@
 #include <time.h>
 #include <float.h>
 
-#include "./include/data_types.h"
-#include "./include/work_flow.h"
+#include "../include/data_types.h"
+#include "../include/work_flow.h"
 
 /** \brief Function to find the minimum positive float number among 5 inputs. \n
  * This function is used to find the time interval from the current time to the event. If the output is not satisfied the function's purpose the error message will appear

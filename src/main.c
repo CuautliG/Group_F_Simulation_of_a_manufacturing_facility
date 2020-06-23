@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "./include/data_types.h"
-#include "./include/main.h"
-#include "./include/read_data.h"
-#include "./include/work_flow.h"
-#include "./include/export_files.h"
-#include "./include/common_functions.h"
+#include "../include/data_types.h"
+#include "../include/main.h"
+#include "../include/read_data.h"
+#include "../include/work_flow.h"
+#include "../include/export_files.h"
+#include "../include/common_functions.h"
 
 /** \brief Function to run the simulator. \n
  * This function calls all the necessary function in order to simulate the manufacturing facility.
