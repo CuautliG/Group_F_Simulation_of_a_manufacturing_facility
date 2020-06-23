@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "./include/data_types.h"
-#include "./include/common_functions.h"
+#include "../include/data_types.h"
+#include "../include/common_functions.h"
 
 /** \brief Function to print my_state. \n
  * This function takes the paramater from my_state and it displays the values to the user in a report form
@@ -24,8 +24,8 @@ void print_state(struct STATE *my_state){
     printf("Average number of P1 per minute: %f\n",my_state->produced_prod[0]/my_state->clock);
     printf("Average number of P2 per minute: %f\n",my_state->produced_prod[1]/my_state->clock);
     printf("Average number of P3 per minute: %f\n",my_state->produced_prod[2]/my_state->clock);
-    printf("Idleness of inspector 1 per minute: %f \n", my_state->inspector1.idle_time/my_state->clock);
-    printf("Idleness of inspector 2 per minute: %f \n", my_state->inspector2.idle_time/my_state->clock);
+    printf("Idleness of inspector 1 per minute: %f\n", my_state->inspector1.idle_time/my_state->clock);
+    printf("Idleness of inspector 2 per minute: %f\n\n", my_state->inspector2.idle_time/my_state->clock);
 }
 
 /** \brief Function to print my_ptime. \n
