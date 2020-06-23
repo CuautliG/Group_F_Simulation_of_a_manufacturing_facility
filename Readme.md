@@ -22,7 +22,7 @@ Usage
 =====
 
 To run this program, you will need to download all its files and then follow the instructions mentioned in
-[User\_Manual.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
+[User\_Manual.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki/User-Documentation#user-documentation)
 
 File Structure
 ================================================
@@ -88,7 +88,7 @@ File Structure
 Documentation
 =============
 
-The User manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
+The User manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki/User-Documentation#user-documentation)
 The developer manual is available [here](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/wiki)
 
 License
