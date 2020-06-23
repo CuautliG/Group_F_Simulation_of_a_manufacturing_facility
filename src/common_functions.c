@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "./include/data_types.h"
-#include "./include/common_functions.h"
+#include "../include/data_types.h"
+#include "../include/common_functions.h"
 
 /** \brief Function to print my_state. \n
  * This function takes the paramater from my_state and it displays the values to the user in a report form
