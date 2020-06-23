@@ -41,28 +41,28 @@ export_files.o: src/export_files.c
 common_functions.o : src/common_functions.c
 	$(CC) -g -c $(CFLAGS) src/common_functions.c -o build/common_functions.o
 
-test: test/main_test.o test/read_config_test.o test/read_data_test.o test/work_flow_test.o test/export_files_test.o test/common_functions_test.o
-	$(CC) -g -o test/bin/Group_F_Simulation_of_a_manufacturing_facility_test build/main.o build/read_config.o build/read_data.o build/work_flow.o build/export_files.o build/common_functions.o test/build/main_test.o test/build/read_config_test.o test/build/read_data_test.o test/build/work_flow_test.o test/build/export_files_test.o test/build/common_functions_test.o
+test: main_test.o read_config_test.o read_config.o read_data_test.o read_data.o work_flow_test.o work_flow.o export_files_test.o export_files.o common_functions_test.o common_functions.o
+	$(CC) -g -o test/bin/Group_F_Simulation_of_a_manufacturing_facility_test test/build/main_test.o test/build/read_config_test.o build/read_config.o test/build/read_data_test.o build/read_data.o test/build/work_flow_test.o build/work_flow.o test/build/export_files_test.o build/export_files.o test/build/common_functions_test.o build/common_functions.o
 
 
 #Command of the test
 
-test/main_test.o: test/src/main_test.c
+main_test.o: test/src/main_test.c
 	$(CC) -g -c $(CFLAGS) test/src/main_test.c -o test/build/main_test.o
 
-test/read_config_test.o: test/src/read_config_test.c
+read_config_test.o: test/src/read_config_test.c
 	$(CC) -g -c $(CFLAGS) test/src/read_config_test.c -o test/build/read_config_test.o
 
-test/read_data_test.o: test/src/read_data_test.c
+read_data_test.o: test/src/read_data_test.c
 	$(CC) -g -c $(CFLAGS) test/src/read_data_test.c -o test/build/read_data_test.o
 
-test/work_flow_test.o: test/src/work_flow_test.c
+work_flow_test.o: test/src/work_flow_test.c
 	$(CC) -g -c $(CFLAGS) test/src/work_flow_test.c -o test/build/work_flow_test.o
 
-test/export_files_test.o: test/src/export_files_test.c
+export_files_test.o: test/src/export_files_test.c
 	$(CC) -g -c $(CFLAGS) test/src/export_files_test.c -o test/build/export_files_test.o
 
-test/common_functions_test.o : test/src/common_functions_test.c
+common_functions_test.o : test/src/common_functions_test.c
 	$(CC) -g -c $(CFLAGS) test/src/common_functions_test.c -o test/build/common_functions_test.o
 
 #This command run the program
@@ -76,4 +76,4 @@ doxygen:
 	rm -f -r ./doc/detailed
 	doxygen ./doc/doxygen_config.cfg
 clean:
-	rm -f bin/* build/* output/* test/bin/* test/build/* test/output/*
+	rm -f bin/* build/* data/output/* test/bin/* test/build/* test/output/*
