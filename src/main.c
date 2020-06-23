@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/data_types.h"
-#include "./include/main.h"
-#include "./include/read_config.h"
-#include "./include/read_data.h"
-#include "./include/work_flow.h"
-#include "./include/export_files.h"
-#include "./include/common_functions.h"
+#include "../include/data_types.h"
+#include "../include/main.h"
+#include "../include/read_config.h"
+#include "../include/read_data.h"
+#include "../include/work_flow.h"
+#include "../include/export_files.h"
+#include "../include/common_functions.h"
 
 /** \brief Function to run the simulator. \n
  * This function calls all the necessary function in order to simulate the manufacturing facility.
@@ -19,7 +19,6 @@
  *     -2 if an error happened in work_flow, -3 if an error happened in export_files.
  */
 int run_simulator(struct CONFIG *my_config, char* input_directory, char* output_directory) {
-    //print_config(my_config);
     int return_var = 0;         /* Initialize return variable of the function */
     int data_var = 0;           /* Initialize a variable save the value from read_data function  */
     int flow_var = 0;           /* Initialize a variable save the value from work_flow function  */
@@ -227,6 +226,7 @@ int main(int argc, char* argv[]) {
  * The code is divided into the following functions: \n
  *
  * - \ref main function
+ * - \ref read_config function
  * - \ref read_data function
  * - \ref work_flow function
  * - \ref export_files function
