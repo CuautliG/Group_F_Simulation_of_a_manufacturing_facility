@@ -26,7 +26,7 @@ Installation steps are mentioned in [INSTALL.md](https://github.com/CuautliG/Gro
 Usage
 =====
 
-To run, you must first install it. Then you can follow instructions mentioned in
+To run this program, you will need to download all its files and then follow the instructions mentioned in
 [User\_Manual.md](https://github.com/CuautliG/Group_F_Simulation_of_a_manufacturing_facility/tree/master/doc/User_Manual.md).
 
 File Structure
@@ -105,4 +105,4 @@ This project is licensed under the GPL 2.0 License - see the LICENSE.md file for
 Acknowledgements
 ================
 
-Thank to Dr. Cristina Ruiz Martin for providing guidance on how to develop the software.
+We would like to thank our professor Cristina Ruiz Martin for all the guidance through the entire project
