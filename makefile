@@ -9,7 +9,6 @@ endif
 #Creates bin, build, and output folders required to compile and execute the program.
 bin_folder := $(shell mkdir -p bin)
 build_folder := $(shell mkdir -p build)
-output_folder := $(shell mkdir -p output)
 
 bin_folder := $(shell mkdir -p test/bin)
 build_folder := $(shell mkdir -p test/build)
@@ -71,7 +70,7 @@ run:
 	bin/Group_F_Simulation_of_a_manufacturing_facility 
 
 run_test:
-	test/bin/Group_F_Simulation_of_a_manufacturing_facility
+	test/bin/Group_F_Simulation_of_a_manufacturing_facility_test
 
 doxygen:
 	rm -f -r ./doc/detailed
