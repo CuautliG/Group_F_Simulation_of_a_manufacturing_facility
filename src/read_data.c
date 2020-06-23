@@ -11,7 +11,7 @@
  * \param[in] times is a pointer where the values from the inputs files are saved
  * \param[in] STR is the name of the file that need to be opened
  * \param[in,out] length is the quantity of processing times that the function read
- * \return An array containing the processing time of the files which are positive or
+ * \return An array containing the processing time of the files which are positive
  *     or an array that the only value given is the first element as -1
  */
 float *data(float *times, char STR[MAX_INPUT_SIZE], int *length){
@@ -47,7 +47,12 @@ float *data(float *times, char STR[MAX_INPUT_SIZE], int *length){
  *     If the length of the files is equal 0, it means that there was a problem reading a file
  */
 int read_client_files(char *input_directory, struct PTIME *my_ptime,int length_files){
-    float array[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array1[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array2[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array3[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array4[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array5[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array6[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
     char* components[] = {"ser1.dat", "ser2.dat", "ser3.dat", "ws1.dat", "ws2.dat", "ws3.dat"}; /* Array containing the name of the files to open */
     char long_str[NUMB_INPUT_FILES][MAX_INPUT_SIZE] = {'\0'};                                   /* Array containing the full path of the files to open */
 
@@ -57,12 +62,12 @@ int read_client_files(char *input_directory, struct PTIME *my_ptime,int length_f
         strncat(long_str[i], components[i], MAX_ARRAY_SIZE);            /* Copy the files names in the array after the path */
     }
 
-    my_ptime->comp1=data(array,long_str[0], &length_files);             /* Store the values of the input files into the structure */
-    my_ptime->comp2=data(array,long_str[1], &length_files);             /* Store the values of the input files into the structure */
-    my_ptime->comp3=data(array,long_str[2], &length_files);             /* Store the values of the input files into the structure */
-    my_ptime->ws1=data(array,long_str[3], &length_files);               /* Store the values of the input files into the structure */
-    my_ptime->ws2=data(array,long_str[4], &length_files);               /* Store the values of the input files into the structure */
-    my_ptime->ws3=data(array,long_str[5], &length_files);               /* Store the values of the input files into the structure */
+    my_ptime->comp1=data(array1,long_str[0], &length_files);             /* Store the values of the input files into the structure */
+    my_ptime->comp2=data(array2,long_str[1], &length_files);             /* Store the values of the input files into the structure */
+    my_ptime->comp3=data(array3,long_str[2], &length_files);             /* Store the values of the input files into the structure */
+    my_ptime->ws1=data(array4,long_str[3], &length_files);               /* Store the values of the input files into the structure */
+    my_ptime->ws2=data(array5,long_str[4], &length_files);               /* Store the values of the input files into the structure */
+    my_ptime->ws3=data(array6,long_str[5], &length_files);               /* Store the values of the input files into the structure */
 
     return length_files;                                                /* Return the number of values retrieved */
 }
@@ -77,14 +82,19 @@ int read_client_files(char *input_directory, struct PTIME *my_ptime,int length_f
  */
 int generate_random_time (char *input_directory, struct CONFIG *my_config, struct PTIME* my_ptime){
     int return_var = 0;
-    float array[MAX_SIMULATION_LENGTH]; /* Array to store the values of the input files */
+    float array1[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array2[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array3[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array4[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array5[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
+    float array6[MAX_SIMULATION_LENGTH];                                                         /* Array to store the values of the input files */
 
-    my_ptime->comp1 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
-    my_ptime->comp2 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
-    my_ptime->comp3 = generate_random(my_config,array);          /* Store the values that were randomly generated into the structure */
-    my_ptime->ws1 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
-    my_ptime->ws2 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
-    my_ptime->ws3 = generate_random(my_config,array);            /* Store the values that were randomly generated into the structure */
+    my_ptime->comp1 = generate_random(my_config,array1);          /* Store the values that were randomly generated into the structure */
+    my_ptime->comp2 = generate_random(my_config,array2);          /* Store the values that were randomly generated into the structure */
+    my_ptime->comp3 = generate_random(my_config,array3);          /* Store the values that were randomly generated into the structure */
+    my_ptime->ws1 = generate_random(my_config,array4);            /* Store the values that were randomly generated into the structure */
+    my_ptime->ws2 = generate_random(my_config,array5);            /* Store the values that were randomly generated into the structure */
+    my_ptime->ws3 = generate_random(my_config,array6);            /* Store the values that were randomly generated into the structure */
 
     /* If the first element of any of the processing times is equal -2 it means there was a problem with the limits*/
     if (my_ptime->comp1[0]==-2.00||my_ptime->comp2[0]==-2.00||my_ptime->comp3[0]==-2.00||my_ptime->ws1[0]==-2.00||my_ptime->ws1[0]==-2.00||my_ptime->ws1[0]==-2.00){
@@ -101,7 +111,7 @@ int generate_random_time (char *input_directory, struct CONFIG *my_config, struc
  * This function uses the configuration file to create an array of random values
  * \param[in] my_config is the configuration that the simulator uses to run
  * \param[in] rand_numb is a pointer where the processing times are saved
- * \return An array containing the processing time of the files which are positive if there was no problem or an array that the only
+ * \return An array containing the processing time of the files which are positive or an array that the only
  *     value given is the first element as -2 or -3. -2 for a problems with the limits and -3 for problem with the simulation length
  */
 float *generate_random(struct CONFIG *my_config,float *rand_numb){
