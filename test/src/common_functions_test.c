@@ -11,14 +11,17 @@
 
 /* An scenario give you back my_state */
 void set_state_test1(struct CONFIG *my_config,struct STATE *my_state){
-    char* config_name=      "./data/config.cfg";    // The output directory
-    char* input_directory=  "./data/input/";    // The output directory
+    char* config_name=      "./test/data/config.cfg";    // The output directory
     read_config(config_name,my_config);
+    for(int i=1;i<SIM_STATES;i++){ /* Initialize sim_length and clock to zero */
+        (my_state+i)->sim_length=0;
+        (my_state+i)->clock=0;
+    }
 }
 
 void set_state_test2(struct CONFIG *my_config,struct STATE *my_state){
-    char* config_name=      "./data/config.cfg";    // The output directory
-    char* input_directory=  "./data/input/";    // The output directory
+    char* config_name=      "./test/data/config.cfg";    // The output directory
+    char* input_directory=  ".data/input/";    // The output directory
     read_config(config_name,my_config);
     struct PTIME *my_ptime=malloc(sizeof(struct STATE));
     struct INSPECTOR my_inspector1={.id="1234",.name="PersonOne",.idle_time=0.00};
@@ -27,7 +30,8 @@ void set_state_test2(struct CONFIG *my_config,struct STATE *my_state){
         (my_state+i)->inspector1=my_inspector1;
         (my_state+i)->inspector2=my_inspector2;
     }
-    read_data(input_directory, my_config, my_ptime);
+    read_data("./data/input/", my_config, my_ptime);
+    //read_data(input_directory, my_config, my_ptime);
     work_flow(my_config,my_ptime,my_state);
 }
 
